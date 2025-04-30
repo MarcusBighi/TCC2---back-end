@@ -1,9 +1,8 @@
 import express from 'express';
+import { criarIdoso } from '../controllers/idosoController.js';
+
 const router = express.Router();
 
-// Só para teste inicial
-router.get('/', (req, res) => {
-  res.send('API funcionando 🚀');
-});
+router.post('/', criarIdoso);
 
 export default router;

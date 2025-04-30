@@ -1,9 +1,8 @@
 import express from 'express';
+import { criarCuidador } from '../controllers/cuidadorController.js';
+
 const router = express.Router();
 
-// Só para teste inicial
-router.get('/', (req, res) => {
-  res.send('API funcionando 🚀');
-});
+router.post('/', criarCuidador);
 
 export default router;
