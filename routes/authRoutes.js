@@ -1,9 +1,8 @@
 import express from 'express';
+import { loginUsuario } from '../controllers/authController.js';
+
 const router = express.Router();
 
-// Só para teste inicial
-router.get('/', (req, res) => {
-  res.send('API funcionando 🚀');
-});
+router.post('/login', loginUsuario);
 
 export default router;
