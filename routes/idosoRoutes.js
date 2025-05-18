@@ -7,7 +7,16 @@ const router = express.Router();
 
 router.post('/', upload.single('fotoPerfil'), criarIdoso);
 
-router.post('/', criarIdoso);
+// Buscar todos os idosos
+router.get('/', async (req, res) => {
+  try {
+    const idosos = await Idoso.find();
+    res.json(idosos);
+  } catch (error) {
+    console.error('Erro ao buscar idosos:', error);
+    res.status(500).json({ message: 'Erro no servidor' });
+  }
+});
 
 router.get('/:id', async (req, res) => {
     try {
