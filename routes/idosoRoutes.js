@@ -19,16 +19,15 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-    try {
-      const idoso = await Idoso.findById(req.params.id);
-      if (!idoso) return res.status(404).json({ message: 'Idoso não encontrado' });
-      res.json(idoso);
-    } catch (error) {
-      console.error("Erro ao buscar idoso:", error);
-      res.status(500).json({ message: 'Erro no servidor' });
-    
-    }
-  });
+  try {
+    const idoso = await Idoso.findById(req.params.id);
+    if (!idoso) return res.status(404).json({ message: 'Idoso não encontrado' });
+    res.json(idoso);
+  } catch (error) {
+    console.error("Erro ao buscar idoso:", error);
+    res.status(500).json({ message: 'Erro no servidor' });
+  }
+});
 
   router.put('/:id', atualizarIdoso);
 
