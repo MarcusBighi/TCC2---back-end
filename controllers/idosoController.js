@@ -1,12 +1,13 @@
 import Idoso from '../models/Idoso.js';
 import bcrypt from 'bcryptjs';
+import path from 'path';
 
 export const criarIdoso = async (req, res) => {
   try {
     const {
       nome, endereco, idade, telefone, telefoneEmergencia,
       nomeContato, enderecoResponsavel, email, senha,
-      desafios, observacoes, anexos
+      desafios, observacoes
     } = req.body;
 
     const existente = await Idoso.findOne({ email });
@@ -14,7 +15,13 @@ export const criarIdoso = async (req, res) => {
 
     const senhaCriptografada = await bcrypt.hash(senha, 10);
 
-    const fotoPerfil = req.file ? req.file.filename : null; // 👈 pega o nome do arquivo
+    // 📷 Foto de perfil
+    const fotoPerfil = req.files['fotoPerfil']?.[0]?.filename || null;
+
+    // 📎 Anexos
+    const anexos = req.files['anexos']
+      ? req.files['anexos'].map(file => file.filename)
+      : [];
 
     const novoIdoso = new Idoso({
       nome,
@@ -33,7 +40,7 @@ export const criarIdoso = async (req, res) => {
     });
 
     await novoIdoso.save();
-    res.status(201).json({ message: 'Idoso cadastrado com sucesso!' });
+    res.status(201).json({ message: 'Idoso cadastrado com sucesso!', idoso: novoIdoso });
   } catch (error) {
     console.error("Erro no cadastro do idoso:", error);
     res.status(500).json({ message: 'Erro ao cadastrar idoso', error });

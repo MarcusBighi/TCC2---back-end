@@ -5,7 +5,7 @@ import upload from '../middlewares/uploadMiddleware.js';
 
 const router = express.Router();
 
-router.post('/', upload.single('fotoPerfil'), criarIdoso);
+router.post('/', upload, criarIdoso);
 
 // Buscar todos os idosos
 router.get('/', async (req, res) => {

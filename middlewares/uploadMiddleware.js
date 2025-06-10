@@ -2,9 +2,10 @@
 import multer from 'multer';
 import path from 'path';
 
+// Configuração do destino e nome do arquivo
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // pasta onde as fotos serão salvas
+    cb(null, 'uploads/'); // Certifique-se de que a pasta existe
   },
   filename: function (req, file, cb) {
     const uniqueName = Date.now() + '-' + file.originalname;
@@ -12,6 +13,10 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ storage });
+// Campos permitidos: fotoPerfil (1), anexos (até 10)
+const upload = multer({ storage }).fields([
+  { name: 'fotoPerfil', maxCount: 1 },
+  { name: 'anexos', maxCount: 10 }
+]);
 
 export default upload;
